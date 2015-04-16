@@ -7,4 +7,31 @@ use Doctrine\ORM\Mapping as ORM;
 trait AddressTrait
 {
     use HasIdTrait;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $postcode;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Street", mappedBy="address")
+     */
+    private $streets;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Region")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $region;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AddressType")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
 }

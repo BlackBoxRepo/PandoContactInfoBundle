@@ -7,4 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 trait TaxIdTrait
 {
     use HasIdTrait;
+
+    /**
+     * @ORM\Column(type="integer", unique=true)
+     */
+    private $number;
 }

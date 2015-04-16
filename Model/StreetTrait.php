@@ -4,24 +4,24 @@ namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
 use BlackBoxCode\Pando\Bundle\BaseBundle\Model\HasIdTrait;
 use Doctrine\ORM\Mapping as ORM;
 
-trait PhoneTrait
+trait StreetTrait
 {
     use HasIdTrait;
 
     /**
-     * @ORM\Column(type="integer", options={"unsigned":true})
+     * @ORM\Column(type="string")
      */
-    private $number;
+    private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PhoneType")
+     * @ORM\ManyToOne(targetEntity="StreetType")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RegionZone")
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="streets")
      * @ORM\JoinColumn(nullable=false)
-     */
-    private $regionZone;
+     **/
+    private $address;
 }
