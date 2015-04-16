@@ -22,6 +22,6 @@ trait StreetTrait
     /**
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="streets")
      * @ORM\JoinColumn(nullable=false)
-     **/
+     */
     private $address;
 }
