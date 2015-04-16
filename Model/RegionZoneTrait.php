@@ -1,12 +1,12 @@
 <?php
 namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
 
-use BlackBoxCode\Pando\Bundle\BaseBundle\Model\HasIdTrait;
+use BlackBoxCode\Pando\Bundle\BaseBundle\Model\BaseTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 trait RegionZoneTrait
 {
-    use HasIdTrait;
+    use BaseTrait;
 
     /**
      * @ORM\Column(type="string", unique=true)
