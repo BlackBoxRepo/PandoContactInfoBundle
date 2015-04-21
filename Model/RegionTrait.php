@@ -2,6 +2,7 @@
 namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
 
 use BlackBoxCode\Pando\Bundle\BaseBundle\Model\IdTrait;
+use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +30,34 @@ trait RegionTrait
      * @ORM\ManyToMany(targetEntity="RegionZone", mappedBy="regions")
      */
     private $regionZones;
+
+    /**
+     * Checks if the Region belongs to only one country and throws an exception if not
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @throws OneAndOnlyOneException
+     */
+    public function checkOneAndOnlyOneCountry()
+    {
+        $countries = $this->getRegionZones()->filter(
+            function($regionZone) {
+                return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
+            }
+        );
+
+        $countryCount = $countries->count();
+        if ($countryCount !== 1) {
+            throw new OneAndOnlyOneException(
+                sprintf(
+                    'Region "%s" should belong to one and only one RegionZone of type "Country", %d given.',
+                    $this->getName(),
+                    $countryCount
+                )
+            );
+        }
+    }
 
     /**
      * {@inheritdoc}
