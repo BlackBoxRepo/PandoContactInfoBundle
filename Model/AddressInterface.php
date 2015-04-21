@@ -56,7 +56,7 @@ interface AddressInterface extends IdInterface
     public function removeStreet(StreetInterface $street);
 
     /**
-     * @return RegionZone
+     * @return RegionInterface
      */
     public function getRegion();
 
