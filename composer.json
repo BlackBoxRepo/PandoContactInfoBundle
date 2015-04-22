@@ -6,25 +6,19 @@
         {
             "name": "Black Box Code",
             "email": "contact@blackboxcode.com"
+        },
+        {
+            "name": "Christopher West",
+            "email": "9ninemind@gmail.com",
+            "role": "architect"
         }
     ],
     "keywords": ["pando contact info bundle"],
     "license": ["LGPL-3.0"],
     "require": {
-        "blackboxcode/pando-base-bundle": "1.0.0"
+        "blackboxcode/pando-base-bundle": "dev-master"
     },
     "autoload": {
         "psr-4": {"BlackBoxCode\\Pando\\Bundle\\ContactInfoBundle\\": ""}
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/BlackBoxRepo/PandoBaseBundle"
-        }
-    ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "develop"
-        }
     }
 }
