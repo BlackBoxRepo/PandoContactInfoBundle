@@ -104,15 +104,11 @@ trait RegionTrait
      */
     private function getCountries()
     {
-        $countries = $this->getRegionZones()->filter(
+        return $this->getRegionZones()->filter(
             function($regionZone) {
                 return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
             }
         );
-
-        //\Doctrine\Common\Util\Debug::dump($countries);
-
-        return $countries;
     }
 
     /**
