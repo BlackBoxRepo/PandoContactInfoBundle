@@ -23,10 +23,59 @@ class RegionTest extends \PHPUnit_Framework_TestCase
         ;
         $this->mRegion->setName('Colorado');
 
-        $this->mRegionZoneType = $this
-            ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeTrait')
-            ->setMethods(['getName'])
-            ->getMockForTrait();
+        $this->mRegionZoneType = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeInterface');
+    }
+
+    /**
+     * @test
+     */
+    public function getCountry()
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mShippingRegionZone */
+        $mShippingRegionZone = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface');
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mCountryRegionZone */
+        $mCountryRegionZone = clone $mShippingRegionZone;
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneTypeInterface $mShippingRegionZoneType */
+        $mShippingRegionZoneType = clone $this->mRegionZoneType;
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneTypeInterface $mCountryRegionZoneType */
+        $mCountryRegionZoneType = clone $this->mRegionZoneType;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('getRegionZones')
+            ->willReturn(new ArrayCollection([$mShippingRegionZone, $mCountryRegionZone]))
+        ;
+
+        $mShippingRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($mShippingRegionZoneType)
+        ;
+
+        $mCountryRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($mCountryRegionZoneType)
+        ;
+
+        $mShippingRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::SHIPPING)
+        ;
+
+        $mCountryRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::COUNTRY)
+        ;
+
+        $country = $this->mRegion->getCountry();
+        $this->assertInstanceOf('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface', $country);
+        $this->assertSame($mCountryRegionZone, $country);
     }
 
     /**
