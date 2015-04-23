@@ -6,4 +6,5 @@ use BlackBoxCode\Pando\Bundle\BaseBundle\Model\TypeInterface;
 interface RegionZoneTypeInterface extends TypeInterface
 {
     const COUNTRY = 'Country';
+    const SHIPPING = 'Shipping';
 }

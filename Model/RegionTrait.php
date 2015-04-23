@@ -32,34 +32,6 @@ trait RegionTrait
     private $regionZones;
 
     /**
-     * Checks if the Region belongs to only one country and throws an exception if not
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     *
-     * @throws OneAndOnlyOneException
-     */
-    public function checkOneAndOnlyOneCountry()
-    {
-        $countries = $this->getRegionZones()->filter(
-            function($regionZone) {
-                return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
-            }
-        );
-
-        $countryCount = $countries->count();
-        if ($countryCount !== 1) {
-            throw new OneAndOnlyOneException(
-                sprintf(
-                    'Region "%s" should belong to one and only one RegionZone of type "Country", %d given.',
-                    $this->getName(),
-                    $countryCount
-                )
-            );
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getName()
@@ -123,5 +95,29 @@ trait RegionTrait
     {
         if (is_null($this->regionZones)) $this->regionZones = new ArrayCollection();
         $this->regionZones->removeElement($regionZone);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function checkOneAndOnlyOneCountry()
+    {
+        $countries = $this->getRegionZones()->filter(
+            function($regionZone) {
+                return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
+            }
+        );
+
+        $countryCount = $countries->count();
+
+        if ($countryCount !== 1) {
+            throw new OneAndOnlyOneException(
+                sprintf(
+                    'Region "%s" should belong to one and only one RegionZone of type "Country", %d given.',
+                    $this->getName(),
+                    $countryCount
+                )
+            );
+        }
     }
 }
