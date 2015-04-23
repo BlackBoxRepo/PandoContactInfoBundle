@@ -28,7 +28,6 @@ class RegionTest extends \PHPUnit_Framework_TestCase
             ])
             ->getMockForTrait()
         ;
-        $this->mRegion->setName('Colorado');
 
         $this->mRegionZone = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface');
         $this->mRegionZoneType = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeInterface');
