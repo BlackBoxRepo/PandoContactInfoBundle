@@ -3,6 +3,7 @@ namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
 
 use BlackBoxCode\Pando\Bundle\BaseBundle\Model\IdTrait;
 use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException;
+use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -117,6 +118,24 @@ trait RegionTrait
     public function getCountry()
     {
         return $this->getCountries()->first() ?: null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCountry(RegionZoneInterface $country)
+    {
+        if ($country->getType()->getName() !== RegionZoneTypeInterface::COUNTRY) {
+            throw new TypeException(sprintf('%s is not a country.', $country->getName()));
+        }
+
+        foreach ($this->getCountries() as $existingCountry) {
+            $this->removeRegionZone($existingCountry);
+        }
+
+        $this->addRegionZone($country);
+
+        return $this;
     }
 
     /**

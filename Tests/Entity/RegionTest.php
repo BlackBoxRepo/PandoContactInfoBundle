@@ -21,7 +21,11 @@ class RegionTest extends \PHPUnit_Framework_TestCase
     {
         $this->mRegion = $this
             ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionTrait')
-            ->setMethods(['getRegionZones'])
+            ->setMethods([
+                'getRegionZones',
+                'addRegionZone',
+                'removeRegionZone'
+            ])
             ->getMockForTrait()
         ;
         $this->mRegion->setName('Colorado');
@@ -73,6 +77,114 @@ class RegionTest extends \PHPUnit_Framework_TestCase
         $country = $this->mRegion->getCountry();
         $this->assertInstanceOf('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface', $country);
         $this->assertSame($mCountryRegionZone, $country);
+    }
+
+    /**
+     * @test
+     * @expectedException BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException
+     */
+    public function setCountry_notACountry()
+    {
+        $this->mRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($this->mRegionZoneType)
+        ;
+
+        $this->mRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::SHIPPING)
+        ;
+
+        $this->mRegion->setCountry($this->mRegionZone);
+    }
+
+    /**
+     * @test
+     */
+    public function setCountry_noneExist()
+    {
+        $this->mRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($this->mRegionZoneType)
+        ;
+
+        $this->mRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::COUNTRY)
+        ;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('getRegionZones')
+            ->willReturn(new ArrayCollection())
+        ;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('addRegionZone')
+            ->with($this->mRegionZone)
+        ;
+
+        $return = $this->mRegion->setCountry($this->mRegionZone);
+        $this->assertSame($this->mRegion, $return);
+    }
+
+    /**
+     * @test
+     */
+    public function setCountry_oneExists()
+    {
+        $mExistingRegionZone = clone $this->mRegionZone;
+        $mExistingRegionZoneType = clone $this->mRegionZoneType;
+
+        $this->mRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($this->mRegionZoneType)
+        ;
+
+        $this->mRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::COUNTRY)
+        ;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('getRegionZones')
+            ->willReturn(new ArrayCollection([$mExistingRegionZone]))
+        ;
+
+        $mExistingRegionZone
+            ->expects($this->once())
+            ->method('getType')
+            ->willReturn($mExistingRegionZoneType)
+        ;
+
+        $mExistingRegionZoneType
+            ->expects($this->once())
+            ->method('getName')
+            ->willReturn(RegionZoneTypeInterface::COUNTRY)
+        ;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('removeRegionZone')
+            ->with($mExistingRegionZone)
+        ;
+
+        $this->mRegion
+            ->expects($this->once())
+            ->method('addRegionZone')
+            ->with($this->mRegionZone)
+        ;
+
+        $return = $this->mRegion->setCountry($this->mRegionZone);
+        $this->assertSame($this->mRegion, $return);
     }
 
     /**

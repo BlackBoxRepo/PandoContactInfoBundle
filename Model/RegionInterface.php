@@ -3,6 +3,7 @@ namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
 
 use BlackBoxCode\Pando\Bundle\BaseBundle\Model\IdInterface;
 use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException;
+use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException;
 use Doctrine\Common\Collections\ArrayCollection;
 
 interface RegionInterface extends IdInterface
@@ -52,6 +53,12 @@ interface RegionInterface extends IdInterface
      */
     public function getCountry();
 
+    /**
+     * @param RegionZoneInterface $country
+     * @throws TypeException if RegionZone is not a Country
+     * @return $this
+     */
+    public function setCountry(RegionZoneInterface $country);
     /**
      * Checks if the Region belongs to only one country and throws an exception if not
      *
