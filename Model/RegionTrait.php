@@ -98,18 +98,33 @@ trait RegionTrait
     }
 
     /**
-     * {@inheritdoc}
+     * Returns all the RegionZones of type "Country" that the Region is attached to
+     *
+     * @return ArrayCollection<RegionZone>
      */
-    public function checkOneAndOnlyOneCountry()
+    private function getCountries()
     {
-        $countries = $this->getRegionZones()->filter(
+        return $this->getRegionZones()->filter(
             function($regionZone) {
                 return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
             }
         );
+    }
 
-        $countryCount = $countries->count();
+    /**
+     * {@inheritdoc}
+     */
+    public function getCountry()
+    {
+        return $this->getCountries()->first() ?: null;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function checkOneAndOnlyOneCountry()
+    {
+        $countryCount = $this->getCountries()->count();
         if ($countryCount !== 1) {
             throw new OneAndOnlyOneException(
                 sprintf(

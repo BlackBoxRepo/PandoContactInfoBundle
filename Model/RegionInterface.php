@@ -8,16 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface RegionInterface extends IdInterface
 {
     /**
-     * Checks if the Region belongs to only one country and throws an exception if not
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     *
-     * @throws OneAndOnlyOneException
-     */
-    public function checkOneAndOnlyOneCountry();
-
-    /**
      * @return string
      */
     public function getName();
@@ -54,4 +44,21 @@ interface RegionInterface extends IdInterface
      * @param RegionZoneInterface $regionZone
      */
     public function removeRegionZone(RegionZoneInterface $regionZone);
+
+    /**
+     * Gets the RegionZone of type "Country"
+     *
+     * @return RegionZoneInterface
+     */
+    public function getCountry();
+
+    /**
+     * Checks if the Region belongs to only one country and throws an exception if not
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @throws OneAndOnlyOneException
+     */
+    public function checkOneAndOnlyOneCountry();
 }
