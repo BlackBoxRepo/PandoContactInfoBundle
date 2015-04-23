@@ -11,6 +11,9 @@ class RegionTest extends \PHPUnit_Framework_TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject|RegionInterface */
     private $mRegion;
 
+    /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface */
+    private $mRegionZone;
+
     /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneTypeInterface */
     private $mRegionZoneType;
 
@@ -23,6 +26,7 @@ class RegionTest extends \PHPUnit_Framework_TestCase
         ;
         $this->mRegion->setName('Colorado');
 
+        $this->mRegionZone = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface');
         $this->mRegionZoneType = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeInterface');
     }
 
@@ -31,16 +35,9 @@ class RegionTest extends \PHPUnit_Framework_TestCase
      */
     public function getCountry()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mShippingRegionZone */
-        $mShippingRegionZone = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface');
-
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mCountryRegionZone */
+        $mShippingRegionZone = clone $this->mRegionZone;
         $mCountryRegionZone = clone $mShippingRegionZone;
-
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneTypeInterface $mShippingRegionZoneType */
         $mShippingRegionZoneType = clone $this->mRegionZoneType;
-
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneTypeInterface $mCountryRegionZoneType */
         $mCountryRegionZoneType = clone $this->mRegionZoneType;
 
         $this->mRegion
@@ -83,19 +80,13 @@ class RegionTest extends \PHPUnit_Framework_TestCase
      */
     public function checkOneAndOnlyOneCountry_hasOne()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mRegionZone */
-        $mRegionZone = $this
-            ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTrait')
-            ->setMethods(['getType'])
-            ->getMockForTrait();
-
         $this->mRegion
             ->expects($this->once())
             ->method('getRegionZones')
-            ->willReturn(new ArrayCollection([$mRegionZone]))
+            ->willReturn(new ArrayCollection([$this->mRegionZone]))
         ;
 
-        $mRegionZone
+        $this->mRegionZone
             ->expects($this->once())
             ->method('getType')
             ->willReturn($this->mRegionZoneType)
@@ -116,19 +107,13 @@ class RegionTest extends \PHPUnit_Framework_TestCase
      */
     public function checkOneAndOnlyOneCountry_hasNone()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mRegionZone */
-        $mRegionZone = $this
-            ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTrait')
-            ->setMethods(['getType'])
-            ->getMockForTrait();
-
         $this->mRegion
             ->expects($this->once())
             ->method('getRegionZones')
-            ->willReturn(new ArrayCollection([$mRegionZone]))
+            ->willReturn(new ArrayCollection([$this->mRegionZone]))
         ;
 
-        $mRegionZone
+        $this->mRegionZone
             ->expects($this->once())
             ->method('getType')
             ->willReturn($this->mRegionZoneType)
@@ -149,14 +134,8 @@ class RegionTest extends \PHPUnit_Framework_TestCase
      */
     public function checkOneAndOnlyOneCountry_hasMany()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mRegionZone1 */
-        $mRegionZone1 = $this
-            ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTrait')
-            ->setMethods(['getType'])
-            ->getMockForTrait();
-
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RegionZoneInterface $mRegionZone2 */
-        $mRegionZone2 = clone $mRegionZone1;
+        $mRegionZone1 = clone $this->mRegionZone;
+        $mRegionZone2 = clone $this->mRegionZone;
 
         $this->mRegion
             ->expects($this->once())
