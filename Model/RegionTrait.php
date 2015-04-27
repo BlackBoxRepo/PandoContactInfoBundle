@@ -7,6 +7,10 @@ use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ */
 trait RegionTrait
 {
     use IdTrait;
@@ -99,15 +103,15 @@ trait RegionTrait
     }
 
     /**
-     * Returns all the RegionZones of type "Country" that the Region is attached to
+     * Returns all the RegionZones of given type that the Region is attached to
      *
      * @return ArrayCollection<RegionZone>
      */
-    private function getCountries()
+    private function getRegionZonesByTypeName($typeName)
     {
         return $this->getRegionZones()->filter(
-            function($regionZone) {
-                return $regionZone->getType()->getName() === RegionZoneTypeInterface::COUNTRY;
+            function($regionZone) use ($typeName) {
+                return $regionZone->getType()->getName() === $typeName;
             }
         );
     }
@@ -117,7 +121,7 @@ trait RegionTrait
      */
     public function getCountry()
     {
-        return $this->getCountries()->first() ?: null;
+        return $this->getRegionZonesByTypeName(RegionZoneTypeInterface::COUNTRY)->first() ?: null;
     }
 
     /**
@@ -129,7 +133,7 @@ trait RegionTrait
             throw new TypeException(sprintf('%s is not a country.', $country->getName()));
         }
 
-        foreach ($this->getCountries() as $existingCountry) {
+        foreach ($this->getRegionZonesByTypeName(RegionZoneTypeInterface::COUNTRY) as $existingCountry) {
             $this->removeRegionZone($existingCountry);
         }
 
@@ -143,7 +147,7 @@ trait RegionTrait
      */
     public function checkOneAndOnlyOneCountry()
     {
-        $countryCount = $this->getCountries()->count();
+        $countryCount = $this->getRegionZonesByTypeName(RegionZoneTypeInterface::COUNTRY)->count();
         if ($countryCount !== 1) {
             throw new OneAndOnlyOneException(
                 sprintf(
