@@ -59,11 +59,9 @@ interface RegionInterface extends IdInterface
      * @return $this
      */
     public function setCountry(RegionZoneInterface $country);
+
     /**
      * Checks if the Region belongs to only one country and throws an exception if not
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
      *
      * @throws OneAndOnlyOneException
      */

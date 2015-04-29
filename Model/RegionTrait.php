@@ -143,6 +143,9 @@ trait RegionTrait
     }
 
     /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
      * {@inheritdoc}
      */
     public function checkOneAndOnlyOneCountry()
