@@ -30,7 +30,7 @@ trait RegionZoneTrait
     /**
      * @var RegionZoneIsoCodeInterface
      *
-     * @ORM\OneToOne(targetEntity="RegionZoneIsoCode", mappedBy="region")
+     * @ORM\OneToOne(targetEntity="RegionZoneIsoCode", mappedBy="regionZone")
      */
     private $regionZoneIsoCode;
 
