@@ -1,9 +1,9 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Model;
 
-use BlackBoxCode\Pando\Bundle\BaseBundle\Model\IdInterface;
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException;
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException;
+use BlackBoxCode\Pando\BaseBundle\Model\IdInterface;
+use BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException;
+use BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\TypeException;
 use Doctrine\Common\Collections\ArrayCollection;
 
 interface RegionInterface extends IdInterface

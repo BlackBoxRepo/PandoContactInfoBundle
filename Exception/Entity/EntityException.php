@@ -1,7 +1,7 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity;
 
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\ContactInfoBundleException;
+use BlackBoxCode\Pando\ContactInfoBundle\Exception\ContactInfoBundleException;
 
 class EntityException extends ContactInfoBundleException
 {

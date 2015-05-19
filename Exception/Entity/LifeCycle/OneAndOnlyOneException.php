@@ -1,5 +1,5 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\LifeCycle;
 
 class OneAndOnlyOneException extends LifeCycleException
 {

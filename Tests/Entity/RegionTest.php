@@ -1,9 +1,9 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Tests\Entity;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Tests\Entity;
 
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionInterface;
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface;
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeInterface;
+use BlackBoxCode\Pando\ContactInfoBundle\Model\RegionInterface;
+use BlackBoxCode\Pando\ContactInfoBundle\Model\RegionZoneInterface;
+use BlackBoxCode\Pando\ContactInfoBundle\Model\RegionZoneTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class RegionTest extends \PHPUnit_Framework_TestCase
@@ -20,7 +20,7 @@ class RegionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->mRegion = $this
-            ->getMockBuilder('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionTrait')
+            ->getMockBuilder('BlackBoxCode\Pando\ContactInfoBundle\Model\RegionTrait')
             ->setMethods([
                 'getRegionZones',
                 'addRegionZone',
@@ -29,8 +29,8 @@ class RegionTest extends \PHPUnit_Framework_TestCase
             ->getMockForTrait()
         ;
 
-        $this->mRegionZone = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface');
-        $this->mRegionZoneType = $this->getMock('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneTypeInterface');
+        $this->mRegionZone = $this->getMock('BlackBoxCode\Pando\ContactInfoBundle\Model\RegionZoneInterface');
+        $this->mRegionZoneType = $this->getMock('BlackBoxCode\Pando\ContactInfoBundle\Model\RegionZoneTypeInterface');
     }
 
     /**
@@ -74,13 +74,13 @@ class RegionTest extends \PHPUnit_Framework_TestCase
         ;
 
         $country = $this->mRegion->getCountry();
-        $this->assertInstanceOf('BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model\RegionZoneInterface', $country);
+        $this->assertInstanceOf('BlackBoxCode\Pando\ContactInfoBundle\Model\RegionZoneInterface', $country);
         $this->assertSame($mCountryRegionZone, $country);
     }
 
     /**
      * @test
-     * @expectedException BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\TypeException
+     * @expectedException BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\TypeException
      */
     public function setCountry_notACountry()
     {
@@ -214,7 +214,7 @@ class RegionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException
+     * @expectedException BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException
      */
     public function checkOneAndOnlyOneCountry_hasNone()
     {
@@ -241,7 +241,7 @@ class RegionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException
+     * @expectedException BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\LifeCycle\OneAndOnlyOneException
      */
     public function checkOneAndOnlyOneCountry_hasMany()
     {

@@ -1,7 +1,7 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Model;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Model;
 
-use BlackBoxCode\Pando\Bundle\BaseBundle\Model\IdInterface;
+use BlackBoxCode\Pando\BaseBundle\Model\IdInterface;
 
 interface RegionIsoCodeInterface extends IdInterface
 {

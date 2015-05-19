@@ -1,5 +1,5 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity;
 
 class TypeException extends EntityException
 {

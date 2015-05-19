@@ -1,7 +1,7 @@
 <?php
-namespace BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\LifeCycle;
+namespace BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\LifeCycle;
 
-use BlackBoxCode\Pando\Bundle\ContactInfoBundle\Exception\Entity\EntityException;
+use BlackBoxCode\Pando\ContactInfoBundle\Exception\Entity\EntityException;
 
 class LifeCycleException extends EntityException
 {
